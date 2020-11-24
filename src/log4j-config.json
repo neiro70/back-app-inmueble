@@ -1,0 +1,29 @@
+{
+  "development": {
+    "api": {
+      "common": {
+        "appenders": { 
+          "api": { "type": "file", "filename": "backend.log", 
+            "layout": {
+              "type": "pattern", 
+              "pattern": "[%d] [%p] %z %f{1}-%l - %m"
+            } 
+          }
+        },
+        "categories": { 
+          "default": { 
+            "appenders": ["api"], 
+            "level": "debug", 
+            "enableCallStack": true
+          } 
+        }
+      }
+    }
+  },
+  "production": {
+    "login": {
+      "appenders": { "login": { "type": "file", "filename": "api.log" } },
+      "categories": { "default": { "appenders": ["login"], "level": "error" } }
+    }
+  }
+}
