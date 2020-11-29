@@ -1,7 +1,6 @@
 var LocalStrategy   = require('passport-local').Strategy;
 var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
-const {sendEmail} = require('../api/common/emailApi')
 var encoding=require('../util.js');
 var ENVIRONMENT = require('../config-module.js').config();
 const log4js = require("log4js");

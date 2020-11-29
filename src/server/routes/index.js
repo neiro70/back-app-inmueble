@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
 const loginAPI = require('../api/common/login');
-const userApiRead = require('../api/user/read/userApiRead');
 
 module.exports = function (passport) {
 

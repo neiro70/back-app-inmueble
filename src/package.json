@@ -9,6 +9,7 @@
     "stop": "node ./server/bin/server.stop.js"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
     "connect-flash": "*",
     "cookie-parser": "^1.4.5",
