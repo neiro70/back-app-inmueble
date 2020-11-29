@@ -14,6 +14,7 @@ module.exports = mongoose.model('User', {
 	residenceCountry: String,
 	residenceCity: String,
 	isAdmin: Boolean,
+	isSuperAdmin: Boolean,
 	birthday: Date,
 	hash: String,
 	salt: String
