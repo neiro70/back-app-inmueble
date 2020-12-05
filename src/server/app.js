@@ -42,13 +42,15 @@ app.use(cors({
 app.options('*', cors());
 // Middleware - CORS end
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
 app.use(favicon());
 app.use(logger('dev'));
 // Sustituir bodyParser.json por express.json
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuring Passport
 var passport = require('passport');

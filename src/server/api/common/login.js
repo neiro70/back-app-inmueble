@@ -32,14 +32,12 @@ module.exports = function (passport, req, res, next, action) {
 				return next(err); 
 			}
 			if (!user) { 
-				logger.debug("User already exists, %s", util.logUserData(req));
 				res.status(403).json({ error: "User already exists" }); 
 			}
 			else {
 				jwtSign(req, res,
 					(err, token) => {
 						if(token) {
-							logger.info("Sign up::JWT user signed up = %s ", util.logUserData(req))
 							return res.status(200).json({
 								access_token: token,
 								_id: user._id,
@@ -63,7 +61,6 @@ module.exports = function (passport, req, res, next, action) {
 				return next(err);
 			}
 			if (!user) {
-				logger.error("Invalid username or password username, ", util.logUserData(req));
 				return res.status(403).json({ error: "Invalid username or password" });
 			} else {
 				jwtSign(req, res,
@@ -72,7 +69,6 @@ module.exports = function (passport, req, res, next, action) {
 							logger.error("Login token error, %s", JSON.stringify(err));
 							return res.status(401).json({ err: err, status: -1 });
 						} else {
-							logger.info("Sign in username, %s ", util.logUserData(req));
 							return res.status(200).json({
 								access_token: token,
 								_id: user._id,
