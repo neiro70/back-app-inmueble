@@ -14,32 +14,33 @@ module.exports = function(passport){
         passport.use('login', new LocalStrategy({
                 passReqToCallback : true
             },
-            function(req, email, password, done) {
+            function(req, username, password, done) {
                 let filter = {
-                    email: email
+                    email: username
                 };
-                if(username.indexOf("@") > -1) filter = { email: email };
-                // check in mongo if a user with email exists or not
+                if(username.indexOf("@") > -1) filter = { email: username };
+                // check in mongo if a user with username exists or not
                 User.findOne(filter,
                     function(err, user) {
+                        console.log('user', user)
                         // In case of any error, return using the done method
                         if (err)
                             return done(err);
-                        // email does not exist, log the error and redirect back
+                        // Username does not exist, log the error and redirect back
                         if (!user){
-                            logger.info('User Not Found with email ', email);
+                            logger.info('User Not Found with username ', username);
                             return done(null, false, req.flash('message', 'User Not found.'));
                         }
                         
                         //In case of user sign in with google
                         if(!user.password) {
-                            logger.info('User was signed up with google ', email);
+                            logger.info('User was signed up with google ', username);
                             return done(null, user, req.flash('message', 'User Not found. did you signed up with google?'));
                         }
 
                         // User exists but wrong password, log the error
                         if (!isValidPassword(user, password)) {
-                            logger.error("Invalid Password, email = ", user);
+                            logger.error("Invalid Password, usernamer = ", user);
                             return done(null, false, req.flash('message', 'Invalid Password')); // redirect back to login page
                         }
                         // User and password both match, return user from done method

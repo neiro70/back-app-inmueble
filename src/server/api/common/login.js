@@ -12,7 +12,8 @@ var ENVIRONMENT = require('../../config-module.js').config();
 var encoding = require('../../util.js');
 
 module.exports = function (passport, req, res, next, action) {
-
+	console.log(req.body)
+	console.log(action)
 	if (action == 'token') {
 		jwtSign(req, res,
 			(err, token) => {
@@ -57,6 +58,9 @@ module.exports = function (passport, req, res, next, action) {
 	else if (action == 'login') {
 		console.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>login");
 		passport.authenticate('login', function (err, user, info) {
+			console.log(err)
+			console.log(user)
+			console.log(info)
 			if (err) {
 				logger.error("Login error, %s", JSON.stringify(err));
 				return next(err);
