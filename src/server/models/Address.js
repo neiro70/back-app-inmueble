@@ -10,8 +10,8 @@ var AddressSchema = new Schema({
     city: String,
     town: String,
     type: String,
-    dateInsert: Date,
-    isActive: Boolean,
+    date_insert: Date,
+    is_active: Boolean,
 });
 
 

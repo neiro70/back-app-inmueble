@@ -1,5 +1,5 @@
 var LocalStrategy   = require('passport-local').Strategy;
-var User = require('../models/user');
+var User = require('../models/Usertmp');
 var bCrypt = require('bcrypt-nodejs');
 const log4js = require("log4js");
 log4js.configure({
@@ -14,32 +14,32 @@ module.exports = function(passport){
         passport.use('login', new LocalStrategy({
                 passReqToCallback : true
             },
-            function(req, username, password, done) {
+            function(req, email, password, done) {
                 let filter = {
-                    username: username
+                    email: email
                 };
-                if(username.indexOf("@") > -1) filter = { email: username };
-                // check in mongo if a user with username exists or not
+                if(username.indexOf("@") > -1) filter = { email: email };
+                // check in mongo if a user with email exists or not
                 User.findOne(filter,
                     function(err, user) {
                         // In case of any error, return using the done method
                         if (err)
                             return done(err);
-                        // Username does not exist, log the error and redirect back
+                        // email does not exist, log the error and redirect back
                         if (!user){
-                            logger.info('User Not Found with username ', username);
+                            logger.info('User Not Found with email ', email);
                             return done(null, false, req.flash('message', 'User Not found.'));
                         }
                         
                         //In case of user sign in with google
                         if(!user.password) {
-                            logger.info('User was signed up with google ', username);
+                            logger.info('User was signed up with google ', email);
                             return done(null, user, req.flash('message', 'User Not found. did you signed up with google?'));
                         }
 
                         // User exists but wrong password, log the error
                         if (!isValidPassword(user, password)) {
-                            logger.error("Invalid Password, usernamer = ", user);
+                            logger.error("Invalid Password, email = ", user);
                             return done(null, false, req.flash('message', 'Invalid Password')); // redirect back to login page
                         }
                         // User and password both match, return user from done method

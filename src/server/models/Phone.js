@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectID = require('mongodb').ObjectID
 
-var TelSchema = new Schema({
+var PhoneSchema = new Schema({
     number: String,
     type: String,
-    isActive: Boolean,
-    dateInsert: Date,
+    is_active: Boolean,
+    date_insert: Date,
 });
 
 
-module.exports = mongoose.model('Tel', TelSchema);
+module.exports = mongoose.model('Phone', PhoneSchema);

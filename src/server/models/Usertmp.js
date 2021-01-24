@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 const Address = require('./Address');
-const Tel = require('./Tel');
+const Phone = require('./Phone');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.Types.ObjectId;
 
@@ -8,15 +8,16 @@ var UserSchema = new Schema({
     name: String,
     lastname: String,
     email: String,
-    isActive: Boolean,
-    dateInsert: Date,
-    dateUpdate: Date,
+    is_active: Boolean,
+    date_insert: Date,
+    date_update: Date,
     occupation: String,
     rol: String,
-    recidencia_id: {type: ObjectId, ref: "Recidence"},
-    tels:{ type: [Schema.ObjectId], ref: 'Tel' },
+    residence_id: {type: ObjectId, ref: "Residence"},
+    phones:{ type: [Schema.ObjectId], ref: 'Phone' },
     address:{ type: [Schema.ObjectId], ref: 'Address' },
-    password: String
+    password: String,
+    token: String,
 
 });
 

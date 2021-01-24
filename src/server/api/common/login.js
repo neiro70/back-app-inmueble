@@ -41,8 +41,8 @@ module.exports = function (passport, req, res, next, action) {
 							return res.status(200).json({
 								access_token: token,
 								_id: user._id,
-								firstName: user.firstName,
-								lastName: user.lastName
+								name: user.name,
+								lastname: user.lastname
 							});
 						} else {
 							logger.error("Sign up::JWT error = %s ", JSON.stringify(err));
@@ -55,6 +55,7 @@ module.exports = function (passport, req, res, next, action) {
 		})(req, res, next);
 	}
 	else if (action == 'login') {
+		console.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>login");
 		passport.authenticate('login', function (err, user, info) {
 			if (err) {
 				logger.error("Login error, %s", JSON.stringify(err));
@@ -72,8 +73,8 @@ module.exports = function (passport, req, res, next, action) {
 							return res.status(200).json({
 								access_token: token,
 								_id: user._id,
-								firstName: user.firstName,
-								lastName: user.lastName
+								name: user.name,
+								lastname: user.lastname
 							});
 						}
 					}
