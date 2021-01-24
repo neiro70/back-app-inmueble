@@ -88,7 +88,8 @@ userController.createUser = function(req, res){
                 let code = "password"; //pass default
                 code = hash.update(code);
                 code = hash.digest(code);
-                user.password = code.toString('hex');*/
+                user.password = code.toString('hex');
+                */ 
 
                 user.password = createHash("password")
             
