@@ -56,11 +56,8 @@ module.exports = function (passport, req, res, next, action) {
 		})(req, res, next);
 	}
 	else if (action == 'login') {
-		console.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>login");
+		
 		passport.authenticate('login', function (err, user, info) {
-			console.log(err)
-			console.log(user)
-			console.log(info)
 			if (err) {
 				logger.error("Login error, %s", JSON.stringify(err));
 				return next(err);

@@ -1,4 +1,4 @@
-var User = require('../../../models/user');
+var User = require('../../../models/User');
 const LOG4J = require('../../../log4j-config-module.js').config();
 const log4js = require("log4js");
 log4js.configure(LOG4J.api.common);

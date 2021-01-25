@@ -1,21 +1,25 @@
 var mongoose = require('mongoose');
+const Address = require('./Address');
+const Phone = require('./Phone');
+var Schema = mongoose.Schema;
+var ObjectId = Schema.Types.ObjectId;
 
-module.exports = mongoose.model('User2', {
-	id: String,
-	username: String,
-	password: String,
-	email: String,
-	firstName: String,
-	lastName: String,
-	gender: String,
-	profile_picture_url: String,
-	token: String,
-	signupDate: Date,
-	residenceCountry: String,
-	residenceCity: String,
-	isAdmin: Boolean,
-	isSuperAdmin: Boolean,
-	birthday: Date,
-	hash: String,
-	salt: String
+var UserSchema = new Schema({
+    name: String,
+    lastname: String,
+    email: String,
+    is_active: Boolean,
+    date_insert: Date,
+    date_update: Date,
+    occupation: String,
+    rol: String,
+    residence_id: {type: ObjectId, ref: "Residence"},
+    phones:{ type: [Schema.ObjectId], ref: 'Phone' },
+    address:{ type: [Schema.ObjectId], ref: 'Address' },
+    password: String,
+    token: String,
+
 });
+
+
+module.exports = mongoose.model('User', UserSchema);

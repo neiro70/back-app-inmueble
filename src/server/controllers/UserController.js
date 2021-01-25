@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-const User = require("../models/Usertmp");
+const User = require("../models/User");
 const Phone = require('../models/Phone');
 const Address = require('../models/Address');
 const Residence = require('../models/Residence');
@@ -82,15 +82,6 @@ userController.createUser = function(req, res){
                 user.date_insert = new Date();
                 user.is_active = true;
                 user.residencia_id = residence;
-
-                /** SET PASSWORD ENCODE SHA256 */
-                /*var hash = crypto.createHash('sha256');
-                let code = "password"; //pass default
-                code = hash.update(code);
-                code = hash.digest(code);
-                user.password = code.toString('hex');
-                */ 
-
                 user.password = createHash("password")
             
                 user.save(function(err){
@@ -150,14 +141,13 @@ userController.findByEmail = async function(req, res){
 /** http://localhost:3000/users/updatePassword */
 userController.updatePassword = async function(req, res){
     //console.info("req.body:",req.body);
-    var hash = crypto.createHash('sha256');
     var code = req.body.password;
+    
 
     try{
-        code = hash.update(code);
-        code = hash.digest(code);
+
         const filter = { _id: req.body.id};
-        const update = { password: code.toString('hex') ,dateUpdate:new Date()}
+        const update = { password: createHash(code) ,dateUpdate:new Date()}
 
         User.findOneAndUpdate(filter,update).exec(function(err, user){
             if(err){ throw err }
