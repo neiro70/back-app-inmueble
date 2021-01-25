@@ -48,7 +48,7 @@ userController.createUser = function(req, res){
                         phone.number = number;
                         phone.type = type;
                         phone.date_insert = new Date();
-                        phone.isa_ctive = true;
+                        phone.is_active = true;
                         phone.save();
                         user.phones.push(phone);
                        
