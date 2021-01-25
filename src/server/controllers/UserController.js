@@ -82,7 +82,7 @@ userController.createUser = function(req, res){
                 user.date_insert = new Date();
                 user.is_active = true;
                 user.residencia_id = residence;
-                user.password = createHash("password")
+                user.password = createHash("password"); //password by dafault
             
                 user.save(function(err){
                     if( err){ throw err }
