@@ -21,7 +21,7 @@ userController.list = function(req, res){
 };
 
 /** http://localhost:3000/users/createUser */
-userController.createUser = function(req, res){
+userController.createUser = async function(req, res){
     let user = new User()  ;
     let phone = new Phone();
     let address = new Address();
@@ -31,10 +31,10 @@ userController.createUser = function(req, res){
     user.lastname=req.body.lastname;
     user.email=req.body.email;
     user.rol=req.body.rol;
-    residence.name = req.body.residence.name;
+    
 
     try{
-       User.findOne({email:user.email,is_active:true}).exec(function(err, userFind){
+         User.findOne({email:user.email,is_active:true}).exec(function(err, userFind){
             if( err ){ throw err }
             if(userFind){
                 res.status(200).json({code:"002",msg:"User "+user.email+ " exist!"});
@@ -74,23 +74,40 @@ userController.createUser = function(req, res){
                     }
                 
                 }    
-            
-                residence.date_insert = new Date();
-                residence.is_active = true;
-                residence.save();
+                //busca  recidencie para insertar
+                 Residence.findOne({name:req.body.residence.name},  function(err, result) {
+                    if (err) throw err;
+                    if(result == null){
+                        residence.name = req.body.residence.name;
+                        residence.date_insert = new Date();
+                        residence.is_active = true;
+                        residence.save();
+    
+                    }else{
+                        residence=result;
+                    }
+                
+                    //inser user
+                    user.date_insert = new Date();
+                    user.is_active = true;
+                    user.residence_id = residence;
+                    user.password = createHash("password"); //password by dafault
+                
+                    user.save(function(err){
+                        if( err){ throw err }
+                        
+                        console.log("Successfully created user :)");
+                        return res.status(200).json({code:"001",msg:"Successfully created"});
+                        
+                    });
+                
+                }); 
 
-                user.date_insert = new Date();
-                user.is_active = true;
-                user.residencia_id = residence;
-                user.password = createHash("password"); //password by dafault
-            
-                user.save(function(err){
-                    if( err){ throw err }
-                    
-                    console.log("Successfully created user :)");
-                    return res.status(200).json({code:"001",msg:"Successfully created"});
-                    
-                });
+
+               
+
+
+               
             }            
         });
 
